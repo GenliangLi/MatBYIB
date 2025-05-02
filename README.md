@@ -1,4 +1,4 @@
-# MatBYIB: A MATLAB-Based Code for Bayesian Inference of Inspiral Binary Waveforms with Arbitrary Eccentricity
+# MatBYIB: A MATLAB-Based Code for Bayesian Inference of Inspiral Binary Gravitational Waveforms with Arbitrary Eccentricity
 
 ## Overview
 MatBYIB is a MATLAB-based software package designed for Bayesian inference of gravitational wave parameters from inspiraling binary systems with arbitrary eccentricity. This tool is particularly useful for researchers working in gravitational wave astronomy, especially those interested in analyzing extreme mass-ratio inspiral (EMRI) systems using MATLAB. MatBYIB leverages the analytical kludge (AK) waveform model to generate gravitational waveforms and employs the Metropolis-Hastings (M-H) algorithm to perform Bayesian parameter estimation.
