@@ -36,7 +36,8 @@ classdef Fisher_Matrix
             for ii = 1:NN
                 diff_vec(ii,:) = diff_param(obj, ii, params, freq_bin);
             end
-            
+            diff_vec(isnan(diff_vec)) = 0;
+
             % Initialize Fisher matrix
             fish_mix = eye(NN);  % Preallocate for speed
             delta_f = freq_bin(2) - freq_bin(1);  % Frequency resolution
@@ -48,12 +49,8 @@ classdef Fisher_Matrix
                                              diff_vec(jj,:), PSD, delta_f);
                 end
             end
-            
             % Compute covariance matrix (matrix inverse of Fisher matrix)
-            fish_mix_inv = inv(fish_mix);
-            
-            % Force symmetry to handle numerical errors
-            cov_Matrix = (fish_mix_inv + fish_mix_inv')/2;
+            cov_Matrix = inv(fish_mix);
         end
         
         function [diff_vec] = diff_param(obj, ii, params, freq_bin)
@@ -83,10 +80,10 @@ classdef Fisher_Matrix
             params_m(ii) = params(ii) - 0.5*delta;
             
             % Compute perturbed waveforms
-            wave_p = waveform(params_p);
+            wave_p = Waveform(params_p);
             hf_p = wave_p.waveform_fd(freq_bin);
             
-            wave_m = waveform(params_m);
+            wave_m = Waveform(params_m);
             hf_m = wave_m.waveform_fd(freq_bin);
             
             % Central difference derivative
