@@ -80,10 +80,10 @@ classdef Fisher_Matrix
             params_m(ii) = params(ii) - 0.5*delta;
             
             % Compute perturbed waveforms
-            wave_p = waveform(params_p);
+            wave_p = Waveform(params_p);
             hf_p = wave_p.waveform_fd(freq_bin);
             
-            wave_m = waveform(params_m);
+            wave_m = Waveform(params_m);
             hf_m = wave_m.waveform_fd(freq_bin);
             
             % Central difference derivative

@@ -37,7 +37,7 @@ t_max = parameters(15);              % Maximum evolution time [seconds]
 params = [M0,mu0,e_LSO,spin0,Zf,lambda,Phi_LSO,Gamma_LSO,alpha_LSO,thetaS,phiS,thetaK,phiK,phi0,t_max];
 
 % Load AK waveform module and Initialize AK waveform generator with the parameters
-AKwave = AKwaveform(params);
+AKwave = Waveform(params);
 
 % Calculate orbital evolution (returns time series of orbital parameters)
 [t, Phi, nu, e, gamma, alpha] = AKwave.evalution;
@@ -83,8 +83,11 @@ delta_f = freq_bin(2) - freq_bin(1);
 Det = Detector;         
 PSD = Det.Sen_curve_LISA(freq_bin); 
 
+figure
+%loglog(freq_bin,sqrt(freq_bin.*PSD));hold on
+loglog(freq_bin,sqrt(PSD));hold on
 % Set number of parameters for Fisher Matrix calculation (NN=4 for basic params)
-NN =2;  % Typically mass1, mass2, eccentricity, spin
+NN =4;  % Typically mass1, mass2, eccentricity, spin
 
 % Calculate covariance matrix using Fisher Matrix formalism
 [cov_Matrix] = FM.Matrix(params, freq_bin, PSD, NN);
