@@ -23,7 +23,7 @@ classdef MCMC
             % Initialize the parameters array with the first row being the true values.
             paramst = [true_vals params_sh];
             % Generate the initial waveform in the frequency domain.
-            WF = waveform(paramst); % Assuming 'waveform' is a class that generates waveforms.
+            WF = Waveform(paramst); % Assuming 'waveform' is a class that generates waveforms.
             signal_init_f = WF.waveform_fd(freq_bin); % Generate the initial waveform.
             % Compute the periodogram using the initial signal.
             pdgrm = abs(data_f - signal_init_f).^2;
@@ -43,6 +43,7 @@ classdef MCMC
                 lp     = 0;
                 sample = true_vals; % Initialize the log posterior array.
                 lp_store = [lpost(obj,pdgrm,variances,true_vals,params_low,params_high)];  
+                cov_Tem = reshape(cov, dim, dim);
             for ii =2:Ntotal  
                 if mod(ii,printerval) == 0
                     str = ['ii= ', num2str(ii)];
@@ -52,15 +53,15 @@ classdef MCMC
                 lp_prev = lp_store;
                 prev_vec = sample(ii-1,:);
 
-                % cov_Tem = reshape(cov, dim, dim);
-                % params_prop= mvnrnd(prev_vec, (1/4).*cov_Tem);%the mean valua is prev_vec,and the standard covariance is Cov_Matrix
-                % if (mod(ii,50)==0)
-                %     cov_Tem = updateCovarianceMatrix(obj,sample,cov_Tem);
-                % end                                            
+                
+                params_prop= mvnrnd(prev_vec, (1/4).*cov_Tem);%the mean valua is prev_vec,and the standard covariance is Cov_Matrix
+                if (mod(ii,50)==0)
+                    cov_Tem = updateCovarianceMatrix(obj,sample,cov_Tem);
+                end                                            
                 % Generate the proposed signal.
-                params_prop= mvnrnd(prev_vec, (1/4).*cov_Matrix);%
+                % params_prop= mvnrnd(prev_vec, (1/4).*cov_Matrix);%
                 paramst = [params_prop params_sh];
-                WF = waveform(paramst);
+                WF = Waveform(paramst);
                 signal_prop_f = WF.waveform_fd(freq_bin);
                 pdgrm_prop = abs(data_f - signal_prop_f).^2;
                 
@@ -102,27 +103,27 @@ classdef MCMC
             parfor jj = 1:chains
                    temp_lp = reshape(lps(jj,:),Nini,1);
                    temp_chains = reshape(samples(jj,:,:),Nini,dim);
+                   cov_Tem = reshape(cov, dim, dim);
+                   
             for ii = Nini+1:Ntotal
                 % Print status updates at specified intervals.
                 if mod(ii,printerval) == 0
                     str = ['ii= ', num2str(ii)];
                     disp(str);
                 end
-
                 % Retrieve the previous log posterior and parameter values.
                 prev_vec = temp_chains(ii-1,:);
                 % Propose new parameter values from a multivariate normal distribution.
-                params_prop = mvnrnd(prev_vec, (1/4)*cov_Matrix);
-              
-                % cov_Tem = reshape(cov, dim, dim);
-                % params_prop= mvnrnd(prev_vec, (1/4).*cov_Tem);%the mean valua is prev_vec,and the standard covariance is Cov_Matrix
-                % if (mod(ii,50)==0)
-                %     cov_Tem = updateCovarianceMatrix(obj,temp_chains,cov_Tem);
-                % end
+                %params_prop = mvnrnd(prev_vec, (1/4)*cov_Matrix);
+             
+                params_prop= mvnrnd(prev_vec, (1/4).*cov_Tem);%the mean valua is prev_vec,and the standard covariance is Cov_Matrix
+                if (mod(ii,50)==0)
+                    cov_Tem = updateCovarianceMatrix(obj,temp_chains,cov_Tem);
+                end
                 lp_prev = temp_lp(ii-1);
                 % Generate the proposed signal.
                 paramst = [params_prop params_sh];
-                WF = waveform(paramst);
+                WF = Waveform(paramst);
                 signal_prop_f = WF.waveform_fd(freq_bin);
                 %signal_prop_f = WF.waveform_td(sta_t);
                 % Compute the periodogram for the proposed signal.
@@ -157,7 +158,7 @@ classdef MCMC
             chains = size(sam_con,1);
                samplesMeff1(:,:,:) = sam_con(:,(2*n+1):3*n,:);
                samplesMeff2(:,:,:) = sam_con(:,(3*n+1):4*n,:);
-                samplesMeff=[ samplesMeff1; samplesMeff2];
+               samplesMeff=[ samplesMeff1; samplesMeff2];
                lpMeff1(:,:) = lp_con(:,(2*n+1):3*n);
                lpMeff2(:,:) = lp_con(:,(3*n+1):4*n);
                lpMeff=[lpMeff1;lpMeff2];
