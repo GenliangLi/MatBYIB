@@ -1,9 +1,9 @@
- classdef waveform
+ classdef Waveform
    % write a description of the class here.
        properties 
        % define the properties of the class here, (like fields of a struct)
-            M0;   
-            mu0;
+            Mc;   
+            eta;
             e_LSO ;
             spin0;
             Zf; 
@@ -23,11 +23,11 @@
        methods
        % methods, including the constructor are defined in this block
            
-           function obj = waveform(parmas)
+           function obj = Waveform(parmas)
            % class constructor
                if(nargin > 0)
-                obj.M0           =   (parmas(1)) ;  
-                obj.mu0          =   parmas(2) ; 
+                obj.Mc           =   parmas(1) ;  
+                obj.eta          =   parmas(2) ; 
                 obj.e_LSO        =   parmas(3) ;
                 obj.spin0        =   parmas(4) ; 
                 obj.Zf           =   parmas(5) ; 
@@ -48,9 +48,9 @@
            
                     [t,ht]=waveform_td(obj);
                   
-                    [fsg,hf]   =Fourier_tran(obj,t,ht);
+                    [fsg,hf]=Fourier_tran(obj,t,ht);
 
-                    hff     = interp1(fsg,hf,freq_bin,'nearest');
+                    hff= interp1(fsg,hf,freq_bin,'nearest');
            end   
            
            function [t,ht]=waveform_td(obj)
@@ -148,6 +148,13 @@
                 %     alpha = y(5) ;
 
                 %x    = ((2*Pi*Parameters.G*M*y(2))./Parameters.c.^3);  % Post-Newtonian parameter
+               
+
+
+                % 计算两个天体的质量
+                m1 = Mc * ((1 + eta)^(1/5)) / (eta^(3/5));
+                m2 = Mc * ((1 + eta)^(1/5)) / (eta^(2/5));
+                M0  = m1 + m2;
                 M    = obj.M0*Common_CF.Ms  ;    % Restore Parameters in central mass
                 mu    = obj.mu0*Common_CF.Ms   ;   % Restore Parameters in orbiting mass 
                 spin = obj.spin0*(Common_CF.G/Common_CF.c);% Restore Parameters in spin
