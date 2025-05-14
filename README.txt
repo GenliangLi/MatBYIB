@@ -110,7 +110,6 @@ MatBYIB uses an `input.txt` file to read the parameters of the binary system. Th
 
 ## Contact
 For any questions or issues, please contact the authors at:
-- Huaike Guo: guohuaike@ucas.ac.cn
 - Genliang Li: 2932455541@qq.com
 
 ## Documentation
