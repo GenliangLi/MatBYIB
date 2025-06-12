@@ -108,7 +108,7 @@ MatBYIB uses an `input.txt` file to read the parameters of the binary system. Th
   - The current implementation uses the AK waveform model. For higher accuracy, consider integrating other waveform models (e.g., FastEMRI).
 
 ## References
-- Genliang Li, Shujie Zhao, Huaike Guo, Jingyu Su and Zhenheng Li. "MatBYIB: A Matlab-based code for Bayesian inference of inspiral binary waveforms with arbitrary eccentricity." *Journal Not Specified* 2025. [doi: 10.3390/1010000](https://doi.org/10.3390/1010000)
+- Genliang Li, Shujie Zhao, Huaike Guo, Jingyu Su and Zhenheng Li. "MatBYIB: A Matlab-based code for Bayesian inference of inspiral binary waveforms with arbitrary eccentricity." arXiv: 2506.05954 (2025). [doi: 10.3390/1010000](https://doi.org/10.3390/1010000)
 
 
 ## Contact
