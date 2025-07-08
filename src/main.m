@@ -37,7 +37,7 @@ t_max = parameters(15);              % Maximum evolution time [seconds]
 params = [M0,mu0,e_LSO,spin0,Zf,lambda,Phi_LSO,Gamma_LSO,alpha_LSO,thetaS,phiS,thetaK,phiK,phi0,t_max];
 
 % Load AK waveform module and Initialize AK waveform generator with the parameters
-AKwave = Waveform(params);
+AKwave = waveform(params);
 
 % Calculate orbital evolution (returns time series of orbital parameters)
 [t, Phi, nu, e, gamma, alpha] = AKwave.evalution;
