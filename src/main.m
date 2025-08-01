@@ -183,8 +183,8 @@ M0_low = 1.e+5;
 M0_high = 1.e+7;    
 
 % Orbiting object mass [M_sun]
-m0_low = 1.e+0;
-m0_high = 1.e+2;
+mu0_low = 1.e+0;
+mu0_high = 1.e+2;
 
 % Black hole spin parameter [dimensionless]
 spin0_low = 0.001;
@@ -213,6 +213,35 @@ alpha_LSO_high = pi/2;
 
 thetaS_low = 0;
 thetaS_high = pi/2;
+
+phiS_low = 0;
+phiS_high = pi/2;
+
+
+thetaK_low=0;
+thetaK_high=pi/2;
+
+phiK_low=0;
+phiK_high=pi/2;
+
+phi0_low=0;
+phi0_high=pi/2;
+
+t_max_low=0.9*t_max;
+t_max_high=1.1*t_max;
+
+
+% Separate parameters into those being sampled (first NN) and fixed parameters
+true_vals = params(1:NN);  % Parameters to estimate (first NN parameters)
+params_sh = params(NN+1:end); % Fixed parameters (held constant)
+
+
+parameter_low = [M0_low,mu0_low,e_LSO_low,spin0_low,Zf_low,lambda_low,Phi_LSO_low,Gamma_LSO_low,alpha_LSO_low,thetaS_low,phiS_low,thetaK_low,phiK_low,phi0_low,t_max_low];
+parameter_high= [M0_high,mu0_high,e_LSO_high,spin0_high,Zf_high,lambda_high,Phi_LSO_high,Gamma_LSO_high,alpha_LSO_high,thetaS_high,phiS_high,thetaK_high,phiK_high,phi0_high,t_max_high];
+
+
+params_low = parameter_low(1:NN);
+params_high= parameter_high(1:NN);
 
 % Separate parameters into those being sampled (first NN) and fixed parameters
 true_vals = params(1:NN);  % Parameters to estimate (first NN parameters)
