@@ -104,7 +104,7 @@
                     % x0: Vector with initial conditions for the ODE system. Here is defined to be equal to the LSO.
                     x0 = [obj.Phi_LSO, nu_LSO, obj.e_LSO, obj.Gamma_LSO, obj.alpha_LSO ] ; 
                     t_min   = 0 ;                              % final integration time.
-                    dt      = 1/(10.*nu_LSO);
+                    dt      = 1/(20.*nu_LSO);
                     points  = (floor(1/dt.*abs(obj.t_max-t_min)));  % grid points for integration. Defines resolution of waveform
                     %t_span  = linspace(t_min,  obj.t_max, points) ;     % time limits for integration
                     t_span  = linspace(obj.t_max,  t_min, points);      % time limits for integration
