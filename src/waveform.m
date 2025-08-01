@@ -1,4 +1,4 @@
- classdef waveform
+ classdef Waveform
    % write a description of the class here.
        properties 
        % define the properties of the class here, (like fields of a struct)
@@ -23,7 +23,7 @@
        methods
        % methods, including the constructor are defined in this block
            
-           function obj = waveform(parmas)
+           function obj = Waveform(parmas)
            % class constructor
                if(nargin > 0)
                 obj.M0           =   (parmas(1)) ;  
